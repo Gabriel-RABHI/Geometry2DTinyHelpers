@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry2DTinyHelpers", "Geometry2DTinyHelpers\Geometry2DTinyHelpers.csproj", "{3BA6ACE3-21E6-4502-BCBC-0B01025C8572}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geometry2DTinyHelpers.Tests", "Geometry2DTinyHelpers.Tests\Geometry2DTinyHelpers.Tests.csproj", "{D0CE9A84-EEC5-42ED-8CF3-061A6A0C0D79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3BA6ACE3-21E6-4502-BCBC-0B01025C8572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3BA6ACE3-21E6-4502-BCBC-0B01025C8572}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3BA6ACE3-21E6-4502-BCBC-0B01025C8572}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3BA6ACE3-21E6-4502-BCBC-0B01025C8572}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0CE9A84-EEC5-42ED-8CF3-061A6A0C0D79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0CE9A84-EEC5-42ED-8CF3-061A6A0C0D79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0CE9A84-EEC5-42ED-8CF3-061A6A0C0D79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0CE9A84-EEC5-42ED-8CF3-061A6A0C0D79}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A881DDF-E91D-4F14-8196-4FE08565984F}
+	EndGlobalSection
+EndGlobal
