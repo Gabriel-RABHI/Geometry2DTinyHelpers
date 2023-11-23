@@ -85,7 +85,7 @@ namespace Geometry2DTinyHelpers
                 => PointSegmentDistance(p.X, p.Y, a.X, a.Y, b.X, b.Y);
 
             public static double PointLineDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b)
-                => PointDistance(p, Intersections.ProjectPointOnSegment(a, b, p));
+                => PointDistance(p, Intersections.ProjectPointOnLine(b, p, a));
         }
 
         // -------- INTERSECTIONS -------- //
@@ -114,57 +114,57 @@ namespace Geometry2DTinyHelpers
                 }
             }
 
-            public static bool SegmentIntersection(GeometryPoint2D p1, GeometryPoint2D p2, GeometryPoint2D p3, GeometryPoint2D p4, out GeometryPoint2D intersection)
+            public static bool SegmentIntersection(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2, out GeometryPoint2D intersection)
             {
                 double Ax, Bx, Cx, Ay, By, Cy, d, e, f, num;
                 double x1lo, x1hi, y1lo, y1hi;
                 intersection = new GeometryPoint2D(double.NaN, double.NaN);
-                Ax = p2.X - p1.X;
-                Bx = p3.X - p4.X;
+                Ax = b1.X - a1.X;
+                Bx = a2.X - b2.X;
                 if (Ax < 0)
                 {
-                    x1lo = p2.X;
-                    x1hi = p1.X;
+                    x1lo = b1.X;
+                    x1hi = a1.X;
                 }
                 else
                 {
-                    x1hi = p2.X;
-                    x1lo = p1.X;
+                    x1hi = b1.X;
+                    x1lo = a1.X;
                 }
                 if (Bx > 0)
                 {
-                    if (x1hi < p4.X || p3.X < x1lo)
+                    if (x1hi < b2.X || a2.X < x1lo)
                         return false;
                 }
                 else
                 {
-                    if (x1hi < p3.X || p4.X < x1lo)
+                    if (x1hi < a2.X || b2.X < x1lo)
                         return false;
                 }
-                Ay = p2.Y - p1.Y;
-                By = p3.Y - p4.Y;
+                Ay = b1.Y - a1.Y;
+                By = a2.Y - b2.Y;
 
                 if (Ay < 0)
                 {
-                    y1lo = p2.Y; y1hi = p1.Y;
+                    y1lo = b1.Y; y1hi = a1.Y;
                 }
                 else
                 {
-                    y1hi = p2.Y; y1lo = p1.Y;
+                    y1hi = b1.Y; y1lo = a1.Y;
                 }
                 if (By > 0)
                 {
-                    if (y1hi < p4.Y || p3.Y < y1lo)
+                    if (y1hi < b2.Y || a2.Y < y1lo)
                         return false;
                 }
                 else
                 {
-                    if (y1hi < p3.Y || p4.Y < y1lo)
+                    if (y1hi < a2.Y || b2.Y < y1lo)
                         return false;
                 }
 
-                Cx = p1.X - p3.X;
-                Cy = p1.Y - p3.Y;
+                Cx = a1.X - a2.X;
+                Cy = a1.Y - a2.Y;
                 d = By * Cx - Bx * Cy;
                 f = Ay * Bx - Ax * By;
 
@@ -196,35 +196,35 @@ namespace Geometry2DTinyHelpers
 
                 // -------- compute intersection coordinates
                 num = d * Ax;
-                intersection.X = p1.X + num / f;
+                intersection.X = a1.X + num / f;
                 num = d * Ay;
 
-                intersection.Y = p1.Y + num / f;
+                intersection.Y = a1.Y + num / f;
                 return true;
             }
 
-            public static GeometryPoint2D[] GetPerpendicularSegment(GeometryPoint2D p1, GeometryPoint2D p2, float length)
+            public static GeometryPoint2D[] GetPerpendicularLine(GeometryPoint2D a, GeometryPoint2D b, float length)
             {
                 GeometryPoint2D[] result = new GeometryPoint2D[2];
-                double dx = p2.X - p1.X;
-                double dy = p2.Y - p1.Y;
+                double dx = b.X - a.X;
+                double dy = b.Y - a.Y;
                 double d = (float)Math.Sqrt(dx * dx + dy * dy);
                 double ux = dx / d;
                 double uy = dy / d;
                 double vx = -uy;
                 double vy = ux;
-                result[0] = new GeometryPoint2D(p1.X + ux * length, p1.Y + uy * length);
-                result[1] = new GeometryPoint2D(p1.X + vx * length, p1.Y + vy * length);
+                result[0] = new GeometryPoint2D(a.X, a.Y);
+                result[1] = new GeometryPoint2D(a.X + vx * length, a.Y + vy * length);
                 return result;
             }
 
-            public static GeometryPoint2D ProjectPointOnSegment(GeometryPoint2D la, GeometryPoint2D lb, GeometryPoint2D p)
+            public static GeometryPoint2D ProjectPointOnLine(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b)
             {
-                double m = (double)(lb.Y - la.Y) / (lb.X - la.X);
-                double b = (double)la.Y - (m * la.X);
+                double m = (double)(b.Y - a.Y) / (b.X - a.X);
+                double _b = (double)a.Y - (m * a.X);
 
-                double x = (m * p.Y + p.X - m * b) / (m * m + 1);
-                double y = (m * m * p.Y + m * p.X + b) / (m * m + 1);
+                double x = (m * p.Y + p.X - m * _b) / (m * m + 1);
+                double y = (m * m * p.Y + m * p.X + _b) / (m * m + 1);
 
                 return new GeometryPoint2D(x, y);
             }
@@ -234,7 +234,7 @@ namespace Geometry2DTinyHelpers
         public static class Angles
         {
             public static double SegmentAngle(double x1, double y1, double x2, double y2)
-            => Math.Atan2(y1 - y2, x2 - x1) * Rad2Deg;
+                => Math.Atan2(y1 - y2, x2 - x1) * Rad2Deg;
 
             public static double SegmentAngle(GeometryPoint2D a, GeometryPoint2D b)
                 => SegmentAngle(a.X, a.Y, b.X, b.Y);
