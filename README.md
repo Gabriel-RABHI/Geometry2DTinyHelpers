@@ -14,5 +14,8 @@ This small classes are basic math helpers for 2D geometry computations. They are
 
 ## Point distance
 
+Basic point to point disance :
+
+![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/cb868215-c462-41fa-9a51-59e295a53266)
 
 
