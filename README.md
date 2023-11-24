@@ -18,4 +18,6 @@ Basic point to point disance :
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/cb868215-c462-41fa-9a51-59e295a53266)
 
+## Segment and point distance
 
+![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/b69fda03-6533-4521-ac89-e444a6c41cf6)
