@@ -25,5 +25,10 @@ namespace Geometry2DTinyHelpers
 
         public bool Equals(GeometryPoint2D? other)
             => other != null && other.X == X && other.Y == Y;
+
+        public override string ToString()
+        {
+            return $"X={X} / Y={Y}";
+        }
     }
 }
