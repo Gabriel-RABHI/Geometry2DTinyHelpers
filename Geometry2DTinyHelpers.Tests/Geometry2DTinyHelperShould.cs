@@ -7,23 +7,23 @@ namespace Geometry2DTinyHelpers.Tests
         [Fact(DisplayName = "Compute points distances")]
         public void ComputePointDistance()
         {
-            Assert.Equal(2, Geometry2DTinyHelper.Distances.PointDistance(1, 0, 3, 0));
-            Assert.Equal(2, Geometry2DTinyHelper.Distances.PointDistance(new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
+            Assert.Equal(2, Geometry2DTinyHelper.Distances.ComputePointDistance(1, 0, 3, 0));
+            Assert.Equal(2, Geometry2DTinyHelper.Distances.ComputePointDistance(new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
         }
 
         [Fact(DisplayName = "Compute points to segment / line distances")]
         public void ComputePointSegmentAndLineDistance()
         {
-            Assert.Equal(2, Geometry2DTinyHelper.Distances.PointSegmentDistance(2, 2, 1, 0, 3, 0));
-            Assert.Equal(2, Geometry2DTinyHelper.Distances.PointSegmentDistance(new GeometryPoint2D(2, 2), new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
-            Assert.Equal(1, Geometry2DTinyHelper.Distances.PointSegmentDistance(new GeometryPoint2D(4, 0), new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
-            Assert.Equal(2, Geometry2DTinyHelper.Distances.PointLineDistance(new GeometryPoint2D(0, 2), new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
+            Assert.Equal(2, Geometry2DTinyHelper.Distances.ComputePointSegmentDistance(2, 2, 1, 0, 3, 0));
+            Assert.Equal(2, Geometry2DTinyHelper.Distances.ComputePointSegmentDistance(new GeometryPoint2D(2, 2), new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
+            Assert.Equal(1, Geometry2DTinyHelper.Distances.ComputePointSegmentDistance(new GeometryPoint2D(4, 0), new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
+            Assert.Equal(2, Geometry2DTinyHelper.Distances.ComputePointLineDistance(new GeometryPoint2D(0, 2), new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
         }
 
         [Fact(DisplayName = "Line / segment intersection")]
         public void ComputeIntersections()
         {
-            Assert.Equal(new GeometryPoint2D(2, 2), Geometry2DTinyHelper.Intersections.LineIntersection(
+            Assert.Equal(new GeometryPoint2D(2, 2), Geometry2DTinyHelper.Intersections.ComputeLineIntersection(
                 new GeometryPoint2D(1, 1),
                 new GeometryPoint2D(3, 3),
                 new GeometryPoint2D(1, 3),
@@ -31,7 +31,7 @@ namespace Geometry2DTinyHelpers.Tests
             ));
 
             var result = new GeometryPoint2D();
-            Assert.True(Geometry2DTinyHelper.Intersections.SegmentIntersection(
+            Assert.True(Geometry2DTinyHelper.Intersections.ComputeSegmentIntersection(
                 new GeometryPoint2D(1, 1),
                 new GeometryPoint2D(3, 3),
                 new GeometryPoint2D(1, 3),
@@ -44,7 +44,7 @@ namespace Geometry2DTinyHelpers.Tests
         [Fact(DisplayName = "Perpendiculare")]
         public void PerpendicularLineAndProjectPoint()
         {
-            var seg = Geometry2DTinyHelper.Intersections.GetPerpendicularLine(
+            var seg = Geometry2DTinyHelper.Intersections.ComputePerpendicularLine(
                 new GeometryPoint2D(1, 1),
                 new GeometryPoint2D(3, 1), 2
             );
@@ -66,35 +66,35 @@ namespace Geometry2DTinyHelpers.Tests
         [Fact(DisplayName = "Segment Angles")]
         public void SegmentAngle()
         {
-            var a1 = Geometry2DTinyHelper.Angles.SegmentAngle(
+            var a1 = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(0, 1)
             );
-            var a2 = Geometry2DTinyHelper.Angles.SegmentAngle(
+            var a2 = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(1, 1)
             );
-            var a3 = Geometry2DTinyHelper.Angles.SegmentAngle(
+            var a3 = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(1, 0)
             );
-            var a4 = Geometry2DTinyHelper.Angles.SegmentAngle(
+            var a4 = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(1, -1)
             );
-            var a5 = Geometry2DTinyHelper.Angles.SegmentAngle(
+            var a5 = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(0, -1)
             );
-            var a6 = Geometry2DTinyHelper.Angles.SegmentAngle(
+            var a6 = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(-1, -1)
             );
-            var a7 = Geometry2DTinyHelper.Angles.SegmentAngle(
+            var a7 = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(-1, 0)
             );
-            var a8 = Geometry2DTinyHelper.Angles.SegmentAngle(
+            var a8 = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(-1, 1)
             );
@@ -111,35 +111,35 @@ namespace Geometry2DTinyHelpers.Tests
         [Fact(DisplayName = "Segment Positive Angles")]
         public void SegmentPositiveAngle()
         {
-            var a1 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a1 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(0, 1)
             );
-            var a2 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a2 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(1, 1)
             );
-            var a3 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a3 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(1, 0)
             );
-            var a4 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a4 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(1, -1)
             );
-            var a5 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a5 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(0, -1)
             );
-            var a6 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a6 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(-1, -1)
             );
-            var a7 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a7 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(-1, 0)
             );
-            var a8 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a8 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(-1, 1)
             );
@@ -156,19 +156,19 @@ namespace Geometry2DTinyHelpers.Tests
         [Fact(DisplayName = "Two Segments Angle")]
         public void SegmentAngleDelta()
         {
-            var a1 = Geometry2DTinyHelper.Angles.SegmentAngleDelta(
+            var a1 = Geometry2DTinyHelper.Angles.ComputeSegmentAngleDelta(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(0, 1),
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(1, 1)
             );
-            var a2 = Geometry2DTinyHelper.Angles.SegmentAngleDelta(
+            var a2 = Geometry2DTinyHelper.Angles.ComputeSegmentAngleDelta(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(0, 1),
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(-1, -1)
             );
-            var a3 = Geometry2DTinyHelper.Angles.SegmentAngleDelta(
+            var a3 = Geometry2DTinyHelper.Angles.ComputeSegmentAngleDelta(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(-1, 0),
                 new GeometryPoint2D(0, 0),
@@ -182,10 +182,10 @@ namespace Geometry2DTinyHelpers.Tests
         [Fact(DisplayName = "Slope Angle")]
         public void SlopeAngle()
         {
-            var a1 = Geometry2DTinyHelper.Angles.SlopToAngle(1);
-            var a2 = Geometry2DTinyHelper.Angles.SlopToAngle(-1);
-            var a3 = Geometry2DTinyHelper.Angles.SlopToPositiveAngle(1);
-            var a4 = Geometry2DTinyHelper.Angles.SlopToPositiveAngle(-1);
+            var a1 = Geometry2DTinyHelper.Angles.ConvertSlopeToAngle(1);
+            var a2 = Geometry2DTinyHelper.Angles.ConvertSlopeToAngle(-1);
+            var a3 = Geometry2DTinyHelper.Angles.ComputeSlopeToPositiveAngle(1);
+            var a4 = Geometry2DTinyHelper.Angles.ComputeSlopeToPositiveAngle(-1);
             Assert.Equal(-45, a1);
             Assert.Equal(45, a2);
             Assert.Equal(315, a3);
@@ -195,11 +195,11 @@ namespace Geometry2DTinyHelpers.Tests
         [Fact(DisplayName = "Angle offset")]
         public void AngleOffseting()
         {
-            var a1 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a1 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(1, 0)
             );
-            var a2 = Geometry2DTinyHelper.Angles.SegmentPositiveAngle(
+            var a2 = Geometry2DTinyHelper.Angles.ComputeSegmentPositiveAngle(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(0, -1)
             );
@@ -232,12 +232,12 @@ namespace Geometry2DTinyHelpers.Tests
             Assert.Equal(new GeometryPoint2D(1, 1), a1);
             Assert.Equal(new GeometryPoint2D(3, 3), a2);
 
-            var y1 = Geometry2DTinyHelper.Interpolations.Extrapolation(
+            var y1 = Geometry2DTinyHelper.Interpolations.Sample(
                new GeometryPoint2D(0, 0),
                new GeometryPoint2D(2, 2),
                1
            );
-            var y2 = Geometry2DTinyHelper.Interpolations.Extrapolation(
+            var y2 = Geometry2DTinyHelper.Interpolations.Sample(
                 new GeometryPoint2D(0, 0),
                 new GeometryPoint2D(2, 2),
                 3
@@ -284,13 +284,13 @@ namespace Geometry2DTinyHelpers.Tests
             };
 
             double rSquared, yIntercept, slope;
-            Geometry2DTinyHelper.LinearRegressions.LinearRegression(serie, out rSquared, out yIntercept, out slope);
+            Geometry2DTinyHelper.LinearRegressions.ComputeLinearRegression(serie, out rSquared, out yIntercept, out slope);
 
             Assert.Equal(1, rSquared);
             Assert.Equal(3, yIntercept);
             Assert.Equal(0.5, slope);
 
-            var corr = Geometry2DTinyHelper.LinearRegressions.LinearCorrelationCoefficient(serie);
+            var corr = Geometry2DTinyHelper.LinearRegressions.ComputeCorrelationCoefficient(serie);
             Assert.Equal(1, corr);
         }
 
@@ -305,13 +305,13 @@ namespace Geometry2DTinyHelpers.Tests
                 new GeometryPoint2D(8, 7+1)
             };
 
-            Geometry2DTinyHelper.LinearRegressions.LinearRegression(serie, out var rSquared, out var yIntercept, out var slope);
+            Geometry2DTinyHelper.LinearRegressions.ComputeLinearRegression(serie, out var rSquared, out var yIntercept, out var slope);
 
             Assert.True(rSquared < 0.76 && rSquared >= 0.75);
             Assert.Equal(2, yIntercept);
             Assert.Equal(0.7, slope);
 
-            var corr = Geometry2DTinyHelper.LinearRegressions.LinearCorrelationCoefficient(serie);
+            var corr = Geometry2DTinyHelper.LinearRegressions.ComputeCorrelationCoefficient(serie);
             Assert.True(corr < 0.76 && corr >= 0.75);
         }
 
@@ -331,8 +331,8 @@ namespace Geometry2DTinyHelpers.Tests
             Assert.Equal(new GeometryPoint2D(5, 1), r[9]);
         }
 
-        [Fact(DisplayName = "Surfaces")]
-        public void Surfaces()
+        [Fact(DisplayName = "Triangle area and point inclusion")]
+        public void TriangleArea()
         {
             GeometryPoint2D[] triangle = new GeometryPoint2D[]
             {
@@ -341,10 +341,10 @@ namespace Geometry2DTinyHelpers.Tests
                 new GeometryPoint2D(4, 1)
             };
 
-            var r = Geometry2DTinyHelper.Surfaces.Surface(triangle[0], triangle[1], triangle[2]);
+            var r = Geometry2DTinyHelper.Surfaces.ComputeTriangleArea(triangle[0], triangle[1], triangle[2]);
             Assert.Equal(3, Math.Round(r));
-            Assert.True(Geometry2DTinyHelper.Surfaces.PointInTriangle(new GeometryPoint2D(3, 2), triangle[0], triangle[1], triangle[2]));
-            Assert.False(Geometry2DTinyHelper.Surfaces.PointInTriangle(new GeometryPoint2D(1, 2.5), triangle[0], triangle[1], triangle[2]));
+            Assert.True(Geometry2DTinyHelper.Surfaces.IsPointInTriangle(new GeometryPoint2D(3, 2), triangle[0], triangle[1], triangle[2]));
+            Assert.False(Geometry2DTinyHelper.Surfaces.IsPointInTriangle(new GeometryPoint2D(1, 2.5), triangle[0], triangle[1], triangle[2]));
         }
     }
 }

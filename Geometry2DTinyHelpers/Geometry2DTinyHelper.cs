@@ -24,7 +24,7 @@ namespace Geometry2DTinyHelpers
             /// <param name="x2">Segment point 2 horizontal coord.</param>
             /// <param name="y2">Segment point 2 vertical coord.</param>
             /// <returns>Distance in between the two points.</returns>
-            public static double PointDistance(double x1, double y1, double x2, double y2)
+            public static double ComputePointDistance(double x1, double y1, double x2, double y2)
                 => Math.Sqrt(Math.Pow((x2 - x1), 2) + Math.Pow((y2 - y1), 2));
 
             /// <summary>
@@ -33,8 +33,8 @@ namespace Geometry2DTinyHelpers
             /// <param name="a">First point</param>
             /// <param name="b">Second point</param>
             /// <returns>Distance in between the two points.</returns>
-            public static double PointDistance(GeometryPoint2D a, GeometryPoint2D b)
-                => PointDistance(a.X, a.Y, b.X, b.Y);
+            public static double ComputePointDistance(GeometryPoint2D a, GeometryPoint2D b)
+                => ComputePointDistance(a.X, a.Y, b.X, b.Y);
 
             /// <summary>
             /// Compute point to segment distance. A segment is a line section between two points.
@@ -46,7 +46,7 @@ namespace Geometry2DTinyHelpers
             /// <param name="x2">Segment point 2 horizontal coord.</param>
             /// <param name="y2">Segment point 2 vertical coord.</param>
             /// <returns></returns>
-            public static double PointSegmentDistance(double x, double y, double x1, double y1, double x2, double y2)
+            public static double ComputePointSegmentDistance(double x, double y, double x1, double y1, double x2, double y2)
             {
                 var a = x - x1;
                 var b = y - y1;
@@ -89,8 +89,8 @@ namespace Geometry2DTinyHelpers
             /// <param name="a">The start point of the segment.</param>
             /// <param name="b">The end point of the segment.</param>
             /// <returns></returns>
-            public static double PointSegmentDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b)
-                => PointSegmentDistance(p.X, p.Y, a.X, a.Y, b.X, b.Y);
+            public static double ComputePointSegmentDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b)
+                => ComputePointSegmentDistance(p.X, p.Y, a.X, a.Y, b.X, b.Y);
 
             /// <summary>
             /// Compute point to line distance. A line is not limited.
@@ -99,8 +99,8 @@ namespace Geometry2DTinyHelpers
             /// <param name="a">The first point through which the line passes.</param>
             /// <param name="b">The Second point through which the line passes</param>
             /// <returns></returns>
-            public static double PointLineDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b)
-                => PointDistance(p, Intersections.ProjectPointOnLine(p, a, b));
+            public static double ComputePointLineDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b)
+                => ComputePointDistance(p, Intersections.ProjectPointOnLine(p, a, b));
         }
 
         // -------- INTERSECTIONS -------- //
@@ -117,7 +117,7 @@ namespace Geometry2DTinyHelpers
             /// <param name="a2">Second line point 1</param>
             /// <param name="b2">Second line point 2</param>
             /// <returns>The intersection point. Null if lines are paralell.</returns>
-            public static GeometryPoint2D LineIntersection(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2)
+            public static GeometryPoint2D ComputeLineIntersection(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2)
             {
                 double A1 = b1.Y - a1.Y;
                 double B1 = a1.X - b1.X;
@@ -149,7 +149,7 @@ namespace Geometry2DTinyHelpers
             /// <param name="b2">Second segment point 2</param>
             /// <param name="intersection">The intersection point returned. Null if lines are paralell.</param>
             /// <returns>True if intersection is on the segments, false if the intersection is outside of segments.</returns>
-            public static bool SegmentIntersection(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2, out GeometryPoint2D intersection)
+            public static bool ComputeSegmentIntersection(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2, out GeometryPoint2D intersection)
             {
                 double Ax, Bx, Cx, Ay, By, Cy, d, e, f, num;
                 double x1lo, x1hi, y1lo, y1hi;
@@ -245,7 +245,7 @@ namespace Geometry2DTinyHelpers
             /// <param name="b">Segment second point.</param>
             /// <param name="length">THe length of the returned perpendicular segment.</param>
             /// <returns>Two points array that describe the computed segment.</returns>
-            public static GeometryPoint2D[] GetPerpendicularLine(GeometryPoint2D a, GeometryPoint2D b, float length)
+            public static GeometryPoint2D[] ComputePerpendicularLine(GeometryPoint2D a, GeometryPoint2D b, float length)
             {
                 GeometryPoint2D[] result = new GeometryPoint2D[2];
                 double dx = b.X - a.X;
@@ -277,6 +277,29 @@ namespace Geometry2DTinyHelpers
 
                 return new GeometryPoint2D(x, y);
             }
+
+            /// <summary>
+            /// Check if a point is on a segment
+            /// </summary>
+            /// <param name="p">The point to check.</param>
+            /// <param name="a">Segment first point.</param>
+            /// <param name="b">Segment second point.</param>
+            /// <param name="epsilon">The minimal value considered as an error.</param>
+            /// <returns>True if the point is considered on the segment, taking car of epsilon.</returns>
+            public static bool IsPointOnSegment(Point p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001)
+            {
+                var minX = Math.Min(a.X, b.X);
+                var maxX = Math.Max(a.X, b.X);
+                var minY = Math.Min(a.Y, b.Y);
+                var maxY = Math.Max(a.Y, b.Y);
+                if (!(minX <= p.X) || !(p.X <= maxX) || !(minY <= p.Y) || !(p.Y <= maxY))
+                    return false;
+                if (Math.Abs(a.X - b.X) < epsilon)
+                    return Math.Abs(a.X - p.X) < epsilon || Math.Abs(b.X - p.X) < epsilon;
+                if (Math.Abs(a.Y - b.Y) < epsilon)
+                    return Math.Abs(a.Y - p.Y) < epsilon || Math.Abs(b.Y - p.Y) < epsilon;
+                return Math.Abs((p.X - a.X) / (b.X - a.X) - (p.Y - a.Y) / (b.Y - a.Y)) < epsilon);
+            }
         }
 
         // -------- ANGLES -------- //
@@ -294,7 +317,7 @@ namespace Geometry2DTinyHelpers
             /// <param name="x2">Segment point 2 horizontal coord.</param>
             /// <param name="y2">Segment point 2 vertical coord.</param>
             /// <returns>The computed angle, in degree.</returns>
-            public static double SegmentAngle(double x1, double y1, double x2, double y2)
+            public static double ComputeSegmentAngle(double x1, double y1, double x2, double y2)
                 => Math.Atan2(y1 - y2, x2 - x1) * Rad2Deg;
 
             /// <summary>
@@ -303,16 +326,16 @@ namespace Geometry2DTinyHelpers
             /// <param name="a">Segment first point.</param>
             /// <param name="b">Segment second point.</param>
             /// <returns>The computed angle, in degree.</returns>
-            public static double SegmentAngle(GeometryPoint2D a, GeometryPoint2D b)
-                => SegmentAngle(a.X, a.Y, b.X, b.Y);
+            public static double ComputeSegmentAngle(GeometryPoint2D a, GeometryPoint2D b)
+                => ComputeSegmentAngle(a.X, a.Y, b.X, b.Y);
 
             /// <summary>
             /// Convert à line slope to angle in degree.
             /// </summary>
             /// <param name="slop">THe line slope.</param>
             /// <returns>The angle in degree.</returns>
-            public static double SlopToAngle(double slop)
-                => SegmentAngle(new GeometryPoint2D(0, 0), new GeometryPoint2D(1, 1 * slop));
+            public static double ConvertSlopeToAngle(double slop)
+                => ComputeSegmentAngle(new GeometryPoint2D(0, 0), new GeometryPoint2D(1, 1 * slop));
 
             /// <summary>
             /// Compute a single segment angle, or inclination. An horizontale line is 0 degree (East oriented).
@@ -321,9 +344,9 @@ namespace Geometry2DTinyHelpers
             /// <param name="a">Segment first point.</param>
             /// <param name="b">Segment second point.</param>
             /// <returns></returns>
-            public static double SegmentPositiveAngle(GeometryPoint2D a, GeometryPoint2D b)
+            public static double ComputeSegmentPositiveAngle(GeometryPoint2D a, GeometryPoint2D b)
             {
-                var r = SegmentAngle(a.X, a.Y, b.X, b.Y);
+                var r = ComputeSegmentAngle(a.X, a.Y, b.X, b.Y);
                 return r < 0 ? 180d + (180d + r) : r;
             }
 
@@ -332,8 +355,8 @@ namespace Geometry2DTinyHelpers
             /// </summary>
             /// <param name="slop">THe line slope.</param>
             /// <returns>The angle in degree.</returns>
-            public static double SlopToPositiveAngle(double slop)
-                => SegmentPositiveAngle(new GeometryPoint2D(0, 0), new GeometryPoint2D(1, 1 * slop));
+            public static double ComputeSlopeToPositiveAngle(double slop)
+                => ComputeSegmentPositiveAngle(new GeometryPoint2D(0, 0), new GeometryPoint2D(1, 1 * slop));
 
             /// <summary>
             /// Compute two segment angle. Segments do not have to share any points. The result angle is all time in between 0° and 180°.
@@ -343,9 +366,9 @@ namespace Geometry2DTinyHelpers
             /// <param name="a2">Second segment point 1</param>
             /// <param name="b2">Second segment point 2</param>
             /// <returns>The angle formed by the two segments, from 0° to 180°.</returns>
-            public static double SegmentAngleDelta(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2)
+            public static double ComputeSegmentAngleDelta(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2)
             {
-                var d = Math.Abs(SegmentPositiveAngle(a2, b2) - SegmentPositiveAngle(a1, b1));
+                var d = Math.Abs(ComputeSegmentPositiveAngle(a2, b2) - ComputeSegmentPositiveAngle(a1, b1));
                 return d > 180 ? d - 180 : d;
             }
 
@@ -446,13 +469,13 @@ namespace Geometry2DTinyHelpers
                 => (position - a) / (b - a);
 
             /// <summary>
-            /// Compute a line the Y vertical coords for the given X horizontal position.
+            /// Compute for a line the Y vertical coords for the given X horizontal position.
             /// </summary>
             /// <param name="a">Line first point.</param>
             /// <param name="b">Line second point.</param>
             /// <param name="x">The horizontal position to compute Y value.</param>
             /// <returns>THe Y vertical point coord for the given X horizontale coord.</returns>
-            public static double Extrapolation(GeometryPoint2D a, GeometryPoint2D b, double x)
+            public static double Sample(GeometryPoint2D a, GeometryPoint2D b, double x)
             {
                 var m = (b.Y - a.Y) / (b.X - a.X);
                 return a.Y + m * (x - a.X);
@@ -464,7 +487,7 @@ namespace Geometry2DTinyHelpers
             /// <param name="x">The position, between 0 and 1.</param>
             /// <param name="curvatur">A ease factore (1 = fully eased, 0 is straight)</param>
             /// <returns>The computed result, between 0 ans 1.</returns>
-            public static double Gamma(double x, double curvatur = 1)
+            public static double GetGamma(double x, double curvatur = 1)
             {
                 x = Math.Min(1, Math.Max(0, x));
                 return ((1 - x) * (x * x * curvatur)) + (x * (1 - ((1 - x) * (1 - x) * curvatur)));
@@ -488,17 +511,24 @@ namespace Geometry2DTinyHelpers
         public static class LinearRegressions
         {
             /// <summary>
-            /// Compute the correlation coefficient of point serie.
+            /// Compute the correlation coefficient (or 'r') of a point serie. If points are perfectly aligned, result correlation is 1. If they are more randomly dispersed, correlation decrease to near 0.
             /// </summary>
-            /// <param name="pts"></param>
-            /// <returns></returns>
-            public static double LinearCorrelationCoefficient(GeometryPoint2D[] pts)
+            /// <param name="pts">Points to compute linear correlation.</param>
+            /// <returns>The result coefficient (1 if points are aligned)</returns>
+            public static double ComputeCorrelationCoefficient(GeometryPoint2D[] pts)
             {
-                LinearRegression(pts, out var rSquared, out var yIntercept, out var slope);
+                ComputeLinearRegression(pts, out var rSquared, out var yIntercept, out var slope);
                 return rSquared;
             }
 
-            public static void LinearRegression(GeometryPoint2D[] pts, out double rSquared, out double yIntercept, out double slope)
+            /// <summary>
+            /// Compute the regression line parameters (slope and Y offset) and correlation coeficient of a point serie.
+            /// </summary>
+            /// <param name="pts">Points to compute linear regression.</param>
+            /// <param name="rSquared">The correlation coefficient (1 if points are aligned).</param>
+            /// <param name="yIntercept">Y vertical offset.</param>
+            /// <param name="slope">Slope of the line.</param>
+            public static void ComputeLinearRegression(GeometryPoint2D[] pts, out double rSquared, out double yIntercept, out double slope)
             {
                 double sumOfX = 0;
                 double sumOfY = 0;
@@ -536,8 +566,17 @@ namespace Geometry2DTinyHelpers
         }
 
         // -------- B-SPLINE -------- //
+        /// <summary>
+        /// Methods to tessellate (get the intermediate points) a B-Spline curve.
+        /// </summary>
         public static class BSpline
         {
+            /// <summary>
+            /// Return a the point array that form the polyline that represent the spline curv.
+            /// </summary>
+            /// <param name="pts">Tensor points.</param>
+            /// <param name="count">Number of point to generate.</param>
+            /// <returns>The polyline points.</returns>
             public static GeometryPoint2D[] Interpolate1D(GeometryPoint2D[] pts, int count)
             {
                 var r = Interpolate1D(pts.Select(pt => pt.X).ToArray(), pts.Select(pt => pt.Y).ToArray(), count);
@@ -547,6 +586,14 @@ namespace Geometry2DTinyHelpers
                 return array;
             }
 
+            /// <summary>
+            /// Return a the point array that form the polyline that represent the spline curv.
+            /// </summary>
+            /// <param name="xs">Point X coords array.</param>
+            /// <param name="ys">Point Y coords array.</param>
+            /// <param name="count">Number of point to generate.</param>
+            /// <returns>Point X and Y coords.</returns>
+            /// <exception cref="ArgumentException"></exception>
             public static (double[] xs, double[] ys) Interpolate1D(double[] xs, double[] ys, int count)
             {
                 if (xs is null || ys is null || xs.Length != ys.Length)
@@ -649,18 +696,36 @@ namespace Geometry2DTinyHelpers
         }
 
         // -------- SURFACES -------- //
+        /// <summary>
+        /// Methods to compute triangle area and point inclusion.
+        /// </summary>
         public static class Surfaces
         {
-            public static double Surface(GeometryPoint2D a, GeometryPoint2D b, GeometryPoint2D c)
+            /// <summary>
+            /// Compute the surface of a triangle.
+            /// </summary>
+            /// <param name="a">First point of the triangle.</param>
+            /// <param name="b">Second point of the triangle.</param>
+            /// <param name="c">Third point of the triangle.</param>
+            /// <returns>Area of the triangle.</returns>
+            public static double ComputeTriangleArea(GeometryPoint2D a, GeometryPoint2D b, GeometryPoint2D c)
             {
-                var la = Distances.PointDistance(a, b);
-                var lb = Distances.PointDistance(b, c);
-                var lc = Distances.PointDistance(c, a);
+                var la = Distances.ComputePointDistance(a, b);
+                var lb = Distances.ComputePointDistance(b, c);
+                var lc = Distances.ComputePointDistance(c, a);
                 var s = (la + lb + lc) / 2;
                 return Math.Sqrt(s * (s - la) * (s - lb) * (s - lc));
             }
 
-            public static bool PointInTriangle(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, GeometryPoint2D c)
+            /// <summary>
+            /// Chack if a point is in a triangle.
+            /// </summary>
+            /// <param name="p">Point to test for inclusion.</param>
+            /// <param name="a">First point of the triangle.</param>
+            /// <param name="b">Second point of the triangle.</param>
+            /// <param name="c">Third point of the triangle.</param>
+            /// <returns>True if the point is within the triangle.</returns>
+            public static bool IsPointInTriangle(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, GeometryPoint2D c)
             {
                 var det = (b.Y - c.Y) * (a.X - c.X) + (c.X - b.X) * (a.Y - c.Y);
                 var factor_alpha = (b.Y - c.Y) * (p.X - c.X) + (c.X - b.X) * (p.Y - c.Y);
