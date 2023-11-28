@@ -127,7 +127,7 @@ Check if a point is on a segment.
 The prototype of the method :
 
 ```
-static bool IsPointOnSegment(Point p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001);
+static bool IsPointOnSegment(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001);
 ```
 
 ## Angles
