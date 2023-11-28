@@ -16,27 +16,73 @@ This library is a set of static methods to perform basic 2D geometry computation
 
 ## Compute 2 Points Distance
 
-Basic point to point disance :
+Basic point to point distance.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/ecce3107-b437-4fa8-84d3-3a4a7c23053b)
 
+The prototype of the method (using direct coords or GeometryPoint2D class) :
+
+```
+public static double ComputePointDistance(double x1, double y1, double x2, double y2);
+public static double ComputePointDistance(GeometryPoint2D a, GeometryPoint2D b);
+```
+
+Sample :
+
+```c#
+Geometry2DTinyHelper.Distances.ComputePointDistance(new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0))
+```
+
 ## Segment and point distance
+
+Compute point to segment distance. A segment is a line section between two points.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/132d3176-0106-4b39-9407-48549d4b64e3)
 
+The prototype of the method (using direct coords or GeometryPoint2D class) :
+
+```
+public static double ComputePointSegmentDistance(double x, double y, double x1, double y1, double x2, double y2);
+public static double ComputePointSegmentDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
+```
+
 ## Point and Line Distance
 
+Compute point to line distance. A line is not limited.
+
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/7be75cc1-bd72-4bd6-ba14-91b3986ff59a)
+
+The prototype of the method :
+
+```
+public static double ComputePointLineDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
+```
 
 # Intersections
 
 ## Two Lines Intersection
 
+Compute two line intersection. If they are parallel, a null point is returned.
+
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/4366660e-978c-4608-a178-8947f5f7f264)
+
+The prototype of the method :
+
+```
+public static GeometryPoint2D ComputeLineIntersection(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2);
+```
 
 ## Two Segments Intersection
 
+Compute two segment intersection. If they are parallel, a null point is assigned to 'intersection' parameter.
+
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/253b34e5-b79e-4a8f-ace0-9c71f971b43d)
+
+The prototype of the method :
+
+```
+static bool ComputeSegmentIntersection(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2, out GeometryPoint2D intersection);
+```
 
 ## ComputePerpendicularLine
 
@@ -143,7 +189,6 @@ Basic point to point disance :
 ## IsPointInTriangle
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/7ffd8da7-e94e-42ec-a355-94bc0a151207)
-
 
 
 

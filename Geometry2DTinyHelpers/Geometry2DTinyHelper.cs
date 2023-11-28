@@ -141,7 +141,7 @@ namespace Geometry2DTinyHelpers
             }
 
             /// <summary>
-            /// Compute two segment intersection. If they are parallel, a null point is asigned to 'intersection' parameter.
+            /// Compute two segment intersection. If they are parallel, a null point is assigned to 'intersection' parameter.
             /// </summary>
             /// <param name="a1">First segment point 1</param>
             /// <param name="b1">First segment point 2</param>
