@@ -286,7 +286,7 @@ namespace Geometry2DTinyHelpers
             /// <param name="b">Segment second point.</param>
             /// <param name="epsilon">The minimal value considered as an error.</param>
             /// <returns>True if the point is considered on the segment, taking car of epsilon.</returns>
-            public static bool IsPointOnSegment(Point p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001)
+            public static bool IsPointOnSegment(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001)
             {
                 var minX = Math.Min(a.X, b.X);
                 var maxX = Math.Max(a.X, b.X);
@@ -298,7 +298,7 @@ namespace Geometry2DTinyHelpers
                     return Math.Abs(a.X - p.X) < epsilon || Math.Abs(b.X - p.X) < epsilon;
                 if (Math.Abs(a.Y - b.Y) < epsilon)
                     return Math.Abs(a.Y - p.Y) < epsilon || Math.Abs(b.Y - p.Y) < epsilon;
-                return Math.Abs((p.X - a.X) / (b.X - a.X) - (p.Y - a.Y) / (b.Y - a.Y)) < epsilon);
+                return Math.Abs((p.X - a.X) / (b.X - a.X) - (p.Y - a.Y) / (b.Y - a.Y)) < epsilon;
             }
         }
 

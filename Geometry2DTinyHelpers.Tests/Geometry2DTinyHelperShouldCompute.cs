@@ -2,16 +2,16 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace Geometry2DTinyHelpers.Tests
 {
-    public class Geometry2DTinyHelperShould
+    public class Geometry2DTinyHelperShouldCompute
     {
-        [Fact(DisplayName = "Compute points distances")]
+        [Fact(DisplayName = "Points distances")]
         public void ComputePointDistance()
         {
             Assert.Equal(2, Geometry2DTinyHelper.Distances.ComputePointDistance(1, 0, 3, 0));
             Assert.Equal(2, Geometry2DTinyHelper.Distances.ComputePointDistance(new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0)));
         }
 
-        [Fact(DisplayName = "Compute points to segment / line distances")]
+        [Fact(DisplayName = "Points to segment / line distances")]
         public void ComputePointSegmentAndLineDistance()
         {
             Assert.Equal(2, Geometry2DTinyHelper.Distances.ComputePointSegmentDistance(2, 2, 1, 0, 3, 0));
@@ -41,7 +41,7 @@ namespace Geometry2DTinyHelpers.Tests
             Assert.Equal(new GeometryPoint2D(2, 2), result);
         }
 
-        [Fact(DisplayName = "Perpendiculare")]
+        [Fact(DisplayName = "Perpendiculare segment")]
         public void PerpendicularLineAndProjectPoint()
         {
             var seg = Geometry2DTinyHelper.Intersections.ComputePerpendicularLine(
@@ -52,7 +52,7 @@ namespace Geometry2DTinyHelpers.Tests
             Assert.Equal(new GeometryPoint2D(1, 3), seg[1]);
         }
 
-        [Fact(DisplayName = "Project point on line")]
+        [Fact(DisplayName = "Point on line projection")]
         public void ProjectPointOnLine()
         {
             var p = Geometry2DTinyHelper.Intersections.ProjectPointOnLine(
@@ -61,6 +61,13 @@ namespace Geometry2DTinyHelpers.Tests
                 new GeometryPoint2D(3, 3)
             );
             Assert.Equal(new GeometryPoint2D(2, 2), p);
+        }
+
+        [Fact(DisplayName = "Point on segment")]
+        public void PointOnSegment()
+        {
+            Assert.True(Geometry2DTinyHelper.Intersections.IsPointOnSegment(new GeometryPoint2D(1, 1.5), new GeometryPoint2D(0, 1), new GeometryPoint2D(2, 2)));
+            Assert.False(Geometry2DTinyHelper.Intersections.IsPointOnSegment(new GeometryPoint2D(1, 1.6), new GeometryPoint2D(0, 1), new GeometryPoint2D(2, 2)));
         }
 
         [Fact(DisplayName = "Segment Angles")]
