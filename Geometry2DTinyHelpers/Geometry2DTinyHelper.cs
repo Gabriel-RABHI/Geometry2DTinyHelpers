@@ -239,7 +239,7 @@ namespace Geometry2DTinyHelpers
             }
 
             /// <summary>
-            /// Compute a segment points of length 'lenght', perpendicular to the given segment and starting from 'a' point.
+            /// Compute a segment points of length 'length', perpendicular to the given segment and starting from 'a' point.
             /// </summary>
             /// <param name="a">Segment first point.</param>
             /// <param name="b">Segment second point.</param>
@@ -279,7 +279,7 @@ namespace Geometry2DTinyHelpers
             }
 
             /// <summary>
-            /// Check if a point is on a segment
+            /// Check if a point is on a segment.
             /// </summary>
             /// <param name="p">The point to check.</param>
             /// <param name="a">Segment first point.</param>
@@ -330,7 +330,7 @@ namespace Geometry2DTinyHelpers
                 => ComputeSegmentAngle(a.X, a.Y, b.X, b.Y);
 
             /// <summary>
-            /// Convert à line slope to angle in degree.
+            /// Convert a line slope to angle in degree.
             /// </summary>
             /// <param name="slop">THe line slope.</param>
             /// <returns>The angle in degree.</returns>
@@ -417,7 +417,7 @@ namespace Geometry2DTinyHelpers
                 => new GeometryPoint2D(Interpolate(a.X, b.X, factor), Interpolate(a.Y, b.Y, factor));
 
             /// <summary>
-            /// Compate à rotated point around an another point.
+            /// Compute à rotated point around an another point.
             /// </summary>
             /// <param name="pointToRotate">The point to rotate.</param>
             /// <param name="centerPoint">The point to rotate around.</param>
@@ -718,7 +718,7 @@ namespace Geometry2DTinyHelpers
             }
 
             /// <summary>
-            /// Chack if a point is in a triangle.
+            /// Check if a point is in a triangle.
             /// </summary>
             /// <param name="p">Point to test for inclusion.</param>
             /// <param name="a">First point of the triangle.</param>
