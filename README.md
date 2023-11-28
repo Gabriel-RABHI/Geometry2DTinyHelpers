@@ -11,6 +11,7 @@ This library is a set of static methods to perform basic 2D geometry computation
 - Point rotation around a point.
 - Linear regression : slope, intercept and r computation.
 - B-Spline interpolation.
+- Area of a triangle and inner point test.
 
 ## Distances
 
@@ -33,7 +34,7 @@ Sample :
 Geometry2DTinyHelper.Distances.ComputePointDistance(new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0))
 ```
 
-## Segment and point distance
+### Segment and point distance
 
 Compute point to segment distance. A segment is a line section between two points.
 
@@ -46,7 +47,7 @@ public static double ComputePointSegmentDistance(double x, double y, double x1, 
 public static double ComputePointSegmentDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-## Point and Line Distance
+### Point and Line Distance
 
 Compute point to line distance. A line is not limited.
 
@@ -58,9 +59,9 @@ The prototype of the method :
 public static double ComputePointLineDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-# Intersections
+## Intersections
 
-## Two Lines Intersection
+### Two Lines Intersection
 
 Compute two line intersection. If they are parallel, a null point is returned.
 
@@ -76,7 +77,7 @@ public static GeometryPoint2D ComputeLineIntersection(
     GeometryPoint2D b2);
 ```
 
-## Two Segments Intersection
+### Two Segments Intersection
 
 Compute two segment intersection. If they are parallel, a null point is assigned to 'intersection' parameter.
 
@@ -93,7 +94,7 @@ static bool ComputeSegmentIntersection(
     out GeometryPoint2D intersection);
 ```
 
-## ComputePerpendicularLine
+### ComputePerpendicularLine
 
 Compute a segment points of length 'length', perpendicular to the given segment and starting from 'a' point.
 
@@ -105,7 +106,7 @@ The prototype of the method :
 public static GeometryPoint2D[] ComputePerpendicularLine(GeometryPoint2D a, GeometryPoint2D b, float length);
 ```
 
-## ProjectPointOnLine
+### ProjectPointOnLine
 
 Compute a point projected on a line.
 
@@ -117,7 +118,7 @@ The prototype of the method :
 public static GeometryPoint2D ProjectPointOnLine(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-## IsPointOnSegment
+### IsPointOnSegment
 
 Check if a point is on a segment.
 
@@ -126,12 +127,12 @@ Check if a point is on a segment.
 The prototype of the method :
 
 ```
-static bool IsPointOnSegment(Point p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001);
+static bool IsPointOnSegment(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001);
 ```
 
-# Angles
+## Angles
 
-## ComputeSegmentAngle
+### ComputeSegmentAngle
 
 Compute a single segment angle, or inclination. An horizontale line is 0 degree (East origin). Upper angles are negative, lower angles are positive.
 
@@ -148,7 +149,7 @@ Angle in degree is computed on a non clock based scale, where upper oriented seg
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/68b4d80d-c9d5-45e3-9671-2977ca59c202)
 
-## ConvertSlopeToAngle
+### ConvertSlopeToAngle
 
 Convert a slope to angle in degree.  A line can be described as two points, or as a slope and an Y vertical offset.
 
@@ -160,7 +161,7 @@ The prototype of the method :
 public static double ConvertSlopeToAngle(double slop);
 ```
 
-## ComputeSegmentPositiveAngle
+### ComputeSegmentPositiveAngle
 
 Compute a single segment angle, or inclination. An horizontale line is 0 degree (East oriented). Angles are positive, from 0° to near 360°, and clockwise.
 
@@ -176,7 +177,7 @@ The prototype of the method :
  public static double ComputeSegmentPositiveAngle(GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-## ComputeSlopeToPositiveAngle
+### ComputeSlopeToPositiveAngle
 
 Convert à line slope to angle in degree, angles are positive, from 0° to near 360°, and clockwise.
 
@@ -188,7 +189,7 @@ The prototype of the method :
 public static double ComputeSlopeToPositiveAngle(double slop);
 ```
 
-## ComputeSegmentAngleDelta
+### ComputeSegmentAngleDelta
 
 Compute two segment angle. Segments do not have to share any points. The result angle is all time in between 0° and 180°.
 
@@ -200,7 +201,7 @@ The prototype of the method :
 public static double ComputeSegmentAngleDelta(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2)
 ```
 
-## Angle origin conversion
+### Angle origin conversion
 
 In above computations, angle origin is on the right side of the circle : it is an East origin. If you want the angle to have another origin, you can convert it easily.
 
@@ -234,9 +235,9 @@ The prototype of the method :
 public static double ToSouth(double angle);
 ```
 
-# Interpolations
+## Interpolations
 
-## Interpolate
+### Interpolate
 
 Interpolate / extrapolate a segment.
 
@@ -248,7 +249,7 @@ The prototype of the method :
 public static GeometryPoint2D Interpolate(GeometryPoint2D a, GeometryPoint2D b, double factor);
 ```
 
-## RotatePoint
+### RotatePoint
 
 Compute à rotated point around an another point.
 
@@ -260,7 +261,7 @@ The prototype of the method :
 public static GeometryPoint2D RotatePoint(GeometryPoint2D pointToRotate, GeometryPoint2D centerPoint, double angleInDegrees);
 ```
 
-## Interpolate
+### Interpolate
 
 Compute à value in between two values, if in between 0 ans 1 - or over / under if not.
 
@@ -272,7 +273,7 @@ The prototype of the method :
 private static double Interpolate(double a, double b, double factor);
 ```
 
-## ExponentialDecreasingInterpolation
+### ExponentialDecreasingInterpolation
 
 Compute a decreased exponential interpolation value between two values.
 
@@ -284,7 +285,7 @@ The prototype of the method :
 public static double ExponentialDecreasingInterpolation(double a, double b, double factor);
 ```
 
-## Normalize
+### Normalize
 
 Compute the position factor of a value in between (or not) two values.
 
@@ -296,7 +297,7 @@ The prototype of the method :
 public static double Normalize(double a, double b, double position);
 ```
 
-## Sample
+### Sample
 
 Compute for a line the Y vertical coords for the given X horizontal position.
 
@@ -308,7 +309,7 @@ The prototype of the method :
 public static double Sample(GeometryPoint2D a, GeometryPoint2D b, double x);
 ```
 
-## GetGamma
+### GetGamma
 
 Sample à curved function between 0 and 1, returning a value between 0 ans 1.
 
@@ -320,7 +321,7 @@ The prototype of the method :
 public static double GetGamma(double x, double curvatur = 1);
 ```
 
-## Sample
+### Sample
 
 Compute the point on a line for the given X horizontal position.
 
@@ -332,7 +333,7 @@ The prototype of the method :
 public static GeometryPoint2D Sample(double slope, double yIntercept, double x);
 ```
 
-# LinearRegressions
+## LinearRegressions
 
 Linear regression is **a data analysis technique that predicts the value of unknown data by using another related and known data value**. It mathematically models the unknown or dependent variable and the known or independent variable as a linear equation. It seeks the optimal line that minimizes the sum of squared differences between predicted and actual values.
 
@@ -344,7 +345,7 @@ Practically, there is three use cases :
 - Get a correlation or, level of alignment of the points (to get a randomness coefficient).
 - Compute the next most probable value for a point set, using the first point slope and offset.
 
-## ComputeCorrelationCoefficient
+### ComputeCorrelationCoefficient
 
 Compute the correlation coefficient (or 'r') of a point serie. If points are perfectly aligned, result correlation is 1. If they are more randomly dispersed, correlation decrease to near 0.
 
@@ -356,7 +357,7 @@ The prototype of the method :
 public static double ComputeCorrelationCoefficient(GeometryPoint2D[] pts);
 ```
 
-## ComputeLinearRegression
+### ComputeLinearRegression
 
 Compute the regression line parameters (slope and Y offset) and correlation coeficient of a point serie.
 
@@ -372,9 +373,9 @@ public static void ComputeLinearRegression(
     out double slope);
 ```
 
-# BSpline
+## BSpline
 
-## Interpolate1D
+### Interpolate1D
 
 Return a the point array that form the poly-line that represent the spline curve.
 
@@ -387,9 +388,9 @@ public static GeometryPoint2D[] Interpolate1D(GeometryPoint2D[] pts, int count);
 public static (double[] xs, double[] ys) Interpolate1D(double[] xs, double[] ys, int count);
 ```
 
-# Surfaces
+## Surfaces
 
-## ComputeTriangleArea
+### ComputeTriangleArea
 
 Compute the surface of a triangle.
 
@@ -401,7 +402,7 @@ The prototype of the method :
 public static double ComputeTriangleArea(GeometryPoint2D a, GeometryPoint2D b, GeometryPoint2D c);
 ```
 
-## IsPointInTriangle
+### IsPointInTriangle
 
 Check if a point is in a triangle.
 
