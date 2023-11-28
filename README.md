@@ -1,3 +1,5 @@
+![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/99acb6f3-fd69-4721-9d85-011d158442ae)
+
 # Geometry 2D Tiny Helpers
 
 This library is a set of static methods to perform basic 2D geometry computations using points, lines and segments. This library is for the one who haven't mathematic skill. This methods are useful for user interface programming, selection of graphics elements, data processing and computations.
