@@ -219,7 +219,7 @@ public static double ToNorth(double angle);
 
 Convert an East angle to West origin one.
 
-![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/991c29d9-5365-4cf4-88a8-1348be19c73d)
+![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/293b592a-02aa-4c2c-84c9-6614ecb044f8)
 
 The prototype of the method :
 
@@ -229,7 +229,7 @@ public static double ToWest(double angle);
 
 Convert an East angle to South origin one.
 
-![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/293b592a-02aa-4c2c-84c9-6614ecb044f8)
+![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/991c29d9-5365-4cf4-88a8-1348be19c73d)
 
 The prototype of the method :
 
