@@ -26,8 +26,8 @@ Basic point to point distance.
 The prototype of the method (using direct coords or GeometryPoint2D class) :
 
 ```
-public static double ComputePointDistance(double x1, double y1, double x2, double y2);
-public static double ComputePointDistance(GeometryPoint2D a, GeometryPoint2D b);
+double ComputePointDistance(double x1, double y1, double x2, double y2);
+double ComputePointDistance(GeometryPoint2D a, GeometryPoint2D b);
 ```
 
 Sample :
@@ -35,6 +35,14 @@ Sample :
 ```c#
 Geometry2DTinyHelper.Distances.ComputePointDistance(new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0))
 ```
+All methods are classified in nested class of the main static Geometry2DTinyHelper class :
+- Geometry2DTinyHelper.Distances
+- Geometry2DTinyHelper.Intersections
+- Geometry2DTinyHelper.Angles
+- Geometry2DTinyHelper.Interpolations
+- Geometry2DTinyHelper.LinearRegressions
+- Geometry2DTinyHelper.BSpline
+- Geometry2DTinyHelper.Surfaces
 
 ### Segment and point distance
 
@@ -45,8 +53,8 @@ Compute point to segment distance. A segment is a line section between two point
 The prototype of the method (using direct coords or GeometryPoint2D class) :
 
 ```
-public static double ComputePointSegmentDistance(double x, double y, double x1, double y1, double x2, double y2);
-public static double ComputePointSegmentDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
+double ComputePointSegmentDistance(double x, double y, double x1, double y1, double x2, double y2);
+double ComputePointSegmentDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
 ```
 
 ### Point and Line Distance
