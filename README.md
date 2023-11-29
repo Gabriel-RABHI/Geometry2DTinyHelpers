@@ -89,7 +89,7 @@ GeometryPoint2D ComputeLineIntersection(
 
 ### Two Segments Intersection
 
-Compute two segment intersection. If they are parallel, a null point is assigned to 'intersection' parameter.
+Compute two segment intersection. Return true if the intersection point is on the segments, false if the intersection point is out of segments. If they are parallel, a null point is assigned to 'intersection' parameter.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/253b34e5-b79e-4a8f-ace0-9c71f971b43d)
 
