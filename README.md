@@ -2,427 +2,463 @@
 
 # Geometry 2D Tiny Helpers
 
-This library is a set of static methods to perform basic 2D geometry computations using points, lines and segments. This library is for the one who haven't mathematic skill. This methods are useful for user interface programming, selection of graphics elements, data processing and computations.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![.NET](https://img.shields.io/badge/.NET-5.0+-512BD4.svg)](https://dotnet.microsoft.com/)
+[![C#](https://img.shields.io/badge/C%23-9.0+-239120.svg)](https://docs.microsoft.com/en-us/dotnet/csharp/)
 
-- Distances : points, point / segment, point / line.
-- Intersection : lines, segments.
-- Perpendicular segments.
-- Projection of a point on a line.
-- Angles : of a segment, between two segments, half or complete clock.
-- Segment interpolation.
-- Point rotation around a point.
-- Linear regression : slope, intercept and r computation.
-- B-Spline interpolation.
-- Area of a triangle and inner point test.
+A lightweight, easy-to-use C# library providing static methods for common 2D geometry computations. Perfect for developers who need reliable geometric calculations without complex mathematical expertise.
 
-## Distances
+## Features
 
-### Compute 2 Points Distance
+- **Distances**: Point-to-point, point-to-segment, and point-to-line calculations
+- **Intersections**: Line and segment intersection detection with perpendicular line computation
+- **Projections**: Project points onto lines
+- **Angles**: Segment angles, angle conversions, and delta calculations with multiple origin systems
+- **Interpolations**: Linear and exponential interpolation, point rotation, and normalization
+- **Linear Regression**: Slope, intercept, and correlation coefficient computation
+- **B-Spline**: Smooth curve interpolation through control points
+- **Surface Calculations**: Triangle area and point-in-triangle tests
 
-Basic point to point distance.
+### Manual Installation
+Clone the repository and add a reference to the project:
+```bash
+git clone https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers.git
+```
+
+## 🚀 Quick Start
+
+```csharp
+using Geometry2DTinyHelpers;
+
+// Calculate distance between two points
+double distance = Geometry2DTinyHelper.Distances.ComputePointDistance(
+    new GeometryPoint2D(1, 0), 
+    new GeometryPoint2D(3, 0)
+);
+
+// Find intersection of two lines
+GeometryPoint2D intersection = Geometry2DTinyHelper.Intersections.ComputeLineIntersection(
+    new GeometryPoint2D(0, 0), new GeometryPoint2D(2, 2),
+    new GeometryPoint2D(2, 0), new GeometryPoint2D(0, 2)
+);
+
+// Compute segment angle
+double angle = Geometry2DTinyHelper.Angles.ComputeSegmentAngle(
+    new GeometryPoint2D(0, 0), 
+    new GeometryPoint2D(1, 1)
+);
+```
+
+## API Organization
+
+All methods are organized into nested static classes:
+
+- `Geometry2DTinyHelper.Distances` - Distance calculations
+- `Geometry2DTinyHelper.Intersections` - Intersection and projection operations
+- `Geometry2DTinyHelper.Angles` - Angle computations and conversions
+- `Geometry2DTinyHelper.Interpolations` - Interpolation and rotation functions
+- `Geometry2DTinyHelper.LinearRegressions` - Statistical regression analysis
+- `Geometry2DTinyHelper.BSpline` - B-Spline curve generation
+- `Geometry2DTinyHelper.Surfaces` - Area and containment tests
+
+## Documentation
+
+### Distances
+
+#### Compute Point-to-Point Distance
+
+Calculate the Euclidean distance between two points.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/ecce3107-b437-4fa8-84d3-3a4a7c23053b)
 
-The prototype of the method (using direct coords or GeometryPoint2D class) :
-
-```
+**Method Signature:**
+```csharp
 double ComputePointDistance(double x1, double y1, double x2, double y2);
 double ComputePointDistance(GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-Sample :
-
-```c#
-Geometry2DTinyHelper.Distances.ComputePointDistance(new GeometryPoint2D(1, 0), new GeometryPoint2D(3, 0))
+**Example:**
+```csharp
+double distance = Geometry2DTinyHelper.Distances.ComputePointDistance(
+    new GeometryPoint2D(1, 0), 
+    new GeometryPoint2D(3, 0)
+); // Returns: 2.0
 ```
-All methods are classified in nested class of the main static Geometry2DTinyHelper class :
-- Geometry2DTinyHelper.Distances
-- Geometry2DTinyHelper.Intersections
-- Geometry2DTinyHelper.Angles
-- Geometry2DTinyHelper.Interpolations
-- Geometry2DTinyHelper.LinearRegressions
-- Geometry2DTinyHelper.BSpline
-- Geometry2DTinyHelper.Surfaces
 
-### Segment and point distance
+#### Point-to-Segment Distance
 
-Compute point to segment distance. A segment is a line section between two points.
+Compute the shortest distance from a point to a line segment.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/132d3176-0106-4b39-9407-48549d4b64e3)
 
-The prototype of the method (using direct coords or GeometryPoint2D class) :
-
-```
+**Method Signature:**
+```csharp
 double ComputePointSegmentDistance(double x, double y, double x1, double y1, double x2, double y2);
 double ComputePointSegmentDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-### Point and Line Distance
+#### Point-to-Line Distance
 
-Compute point to line distance. A line is not limited.
+Compute the perpendicular distance from a point to an infinite line.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/7be75cc1-bd72-4bd6-ba14-91b3986ff59a)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 double ComputePointLineDistance(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-## Intersections
+### Intersections
 
-### Two Lines Intersection
+#### Two Lines Intersection
 
-Compute two line intersection. If they are parallel, a null point is returned.
+Find the intersection point of two infinite lines. Returns `null` if lines are parallel.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/4366660e-978c-4608-a178-8947f5f7f264)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 GeometryPoint2D ComputeLineIntersection(
-    GeometryPoint2D a1,
-    GeometryPoint2D b1,
-    GeometryPoint2D a2,
-    GeometryPoint2D b2);
+    GeometryPoint2D a1, GeometryPoint2D b1,
+    GeometryPoint2D a2, GeometryPoint2D b2
+);
 ```
 
-### Two Segments Intersection
+#### Two Segments Intersection
 
-Compute two segment intersection. Return true if the intersection point is on the segments, false if the intersection point is out of segments. If they are parallel, a null point is assigned to 'intersection' parameter.
+Find the intersection point of two line segments. Returns `true` if intersection is within both segments.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/253b34e5-b79e-4a8f-ace0-9c71f971b43d)
 
-The prototype of the method :
-
-```
-static bool ComputeSegmentIntersection(
-    GeometryPoint2D a1,
-    GeometryPoint2D b1,
-    GeometryPoint2D a2,
-    GeometryPoint2D b2,
-    out GeometryPoint2D intersection);
+**Method Signature:**
+```csharp
+bool ComputeSegmentIntersection(
+    GeometryPoint2D a1, GeometryPoint2D b1,
+    GeometryPoint2D a2, GeometryPoint2D b2,
+    out GeometryPoint2D intersection
+);
 ```
 
-### ComputePerpendicularLine
+#### Compute Perpendicular Line
 
-Compute a segment points of length 'length', perpendicular to the given segment and starting from 'a' point.
+Generate a perpendicular segment of specified length from a point.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/e479357b-a3c3-4e1a-9239-cac2f3bcbb0b)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 GeometryPoint2D[] ComputePerpendicularLine(GeometryPoint2D a, GeometryPoint2D b, float length);
 ```
 
-### ProjectPointOnLine
+#### Project Point onto Line
 
-Compute a point projected on a line.
+Project a point perpendicularly onto a line.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/67768097-6801-4824-870a-719abe0043d5)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 GeometryPoint2D ProjectPointOnLine(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-### IsPointOnSegment
+#### Check Point on Segment
 
-Check if a point is on a segment.
+Verify if a point lies on a segment within a tolerance.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/1e9f71d1-70ab-4650-9ab2-7e80eb0dad52)
 
-The prototype of the method :
-
+**Method Signature:**
+```csharp
+bool IsPointOnSegment(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001);
 ```
-static bool IsPointOnSegment(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, double epsilon = 0.0001);
-```
 
-## Angles
+### Angles
 
-### ComputeSegmentAngle
+#### Compute Segment Angle
 
-Compute a single segment angle, or inclination. An horizontale line is 0 degree (East origin). Upper angles are negative, lower angles are positive.
+Calculate the inclination angle of a segment. Horizontal lines are 0°, with East as origin.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/97bbefc7-f884-458f-9f3e-feaa2f8b81ec)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 double ComputeSegmentAngle(double x1, double y1, double x2, double y2);
 double ComputeSegmentAngle(GeometryPoint2D a, GeometryPoint2D b);
 ```
 
-Angle in degree is computed on a non clock based scale, where upper oriented segment are negative angle, from 0° to near -180°, and lower oriented segment are positive angle from 0° to 180°.
+**Angle Convention:** Upper segments have negative angles (0° to -180°), lower segments have positive angles (0° to 180°).
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/68b4d80d-c9d5-45e3-9671-2977ca59c202)
 
-### ConvertSlopeToAngle
+#### Convert Slope to Angle
 
-Convert a slope to angle in degree.  A line can be described as two points, or as a slope and an Y vertical offset.
+Convert a line's slope coefficient to angle in degrees.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/97a29496-612c-4dc8-a5af-e55353415ffe)
 
-The prototype of the method :
-
+**Method Signature:**
+```csharp
+double ConvertSlopeToAngle(double slope);
 ```
-double ConvertSlopeToAngle(double slop);
-```
 
-### ComputeSegmentPositiveAngle
+#### Compute Positive Segment Angle
 
-Compute a single segment angle, or inclination. An horizontale line is 0 degree (East oriented). Angles are positive, from 0° to near 360°, and clockwise.
+Calculate segment angle as positive values (0° to 360°), clockwise from East.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/8858523f-f36c-4f1c-945c-ea1f5d5551c2)
 
-A 'positive angle' in degree have a range from 0° to near 360°. In every cases, the angle is still represented as positive value.
-
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/0b2eef83-c990-4a44-8be8-143e11062dd0)
 
-The prototype of the method :
-
+**Method Signature:**
+```csharp
+double ComputeSegmentPositiveAngle(GeometryPoint2D a, GeometryPoint2D b);
 ```
- double ComputeSegmentPositiveAngle(GeometryPoint2D a, GeometryPoint2D b);
-```
 
-### ComputeSlopeToPositiveAngle
+#### Compute Slope to Positive Angle
 
-Convert à line slope to angle in degree, angles are positive, from 0° to near 360°, and clockwise.
+Convert slope to positive angle (0° to 360°), clockwise.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/ec9b6d55-6dc2-43de-a4c9-eabc0850b4a8)
 
-The prototype of the method :
-
+**Method Signature:**
+```csharp
+double ComputeSlopeToPositiveAngle(double slope);
 ```
-double ComputeSlopeToPositiveAngle(double slop);
-```
 
-### ComputeSegmentAngleDelta
+#### Compute Segment Angle Delta
 
-Compute two segment angle. Segments do not have to share any points. The result angle is all time in between 0° and 180°.
+Calculate the angle between two segments (always between 0° and 180°).
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/e501bfa0-ea9e-4416-8ad4-db28aac9a368)
 
-The prototype of the method :
-
+**Method Signature:**
+```csharp
+double ComputeSegmentAngleDelta(
+    GeometryPoint2D a1, GeometryPoint2D b1, 
+    GeometryPoint2D a2, GeometryPoint2D b2
+);
 ```
-double ComputeSegmentAngleDelta(GeometryPoint2D a1, GeometryPoint2D b1, GeometryPoint2D a2, GeometryPoint2D b2)
-```
 
-### Angle origin conversion
+#### Angle Origin Conversions
 
-In above computations, angle origin is on the right side of the circle : it is an East origin. If you want the angle to have another origin, you can convert it easily.
+Convert angles between different coordinate system origins (East, North, West, South).
 
-Convert an East angle to North origin one.
-
+**East to North:**
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/0a2c1fb2-e636-4469-a260-772db8bb7a5b)
 
-The prototype of the method :
-
-```
-double ToNorth(double angle);
-```
-
-Convert an East angle to West origin one.
-
+**East to West:**
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/293b592a-02aa-4c2c-84c9-6614ecb044f8)
 
-The prototype of the method :
-
-```
-double ToWest(double angle);
-```
-
-Convert an East angle to South origin one.
-
+**East to South:**
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/991c29d9-5365-4cf4-88a8-1348be19c73d)
 
-The prototype of the method :
-
-```
+**Method Signatures:**
+```csharp
+double ToNorth(double angle);
+double ToWest(double angle);
 double ToSouth(double angle);
 ```
 
-## Interpolations
+### Interpolations
 
-### Interpolate
+#### Interpolate Segment
 
-Interpolate / extrapolate a segment.
+Interpolate or extrapolate along a segment using a factor (0-1 for interpolation).
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/90352c5b-6525-43b9-8f9c-0d7007f75623)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 GeometryPoint2D Interpolate(GeometryPoint2D a, GeometryPoint2D b, double factor);
 ```
 
-### RotatePoint
+#### Rotate Point
 
-Compute à rotated point around an another point.
+Rotate a point around another point by a specified angle.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/8a45b7ce-0580-4564-8849-7e0f45b35059)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 GeometryPoint2D RotatePoint(GeometryPoint2D pointToRotate, GeometryPoint2D centerPoint, double angleInDegrees);
 ```
 
-### Interpolate
+#### Interpolate Values
 
-Compute à value in between two values, if in between 0 ans 1 - or over / under if not.
+Interpolate between two numeric values using a factor.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/e3d2571e-64e5-4711-b3f4-a6f3ba25ed01)
 
-The prototype of the method :
-
+**Method Signature:**
+```csharp
+double Interpolate(double a, double b, double factor);
 ```
-private static double Interpolate(double a, double b, double factor);
-```
 
-### ExponentialDecreasingInterpolation
+#### Exponential Decreasing Interpolation
 
-Compute a decreased exponential interpolation value between two values.
+Apply exponential decay interpolation between two values.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/b36df4c4-5557-4a1d-b2cb-aa5ea476f886)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 double ExponentialDecreasingInterpolation(double a, double b, double factor);
 ```
 
-### Normalize
+#### Normalize
 
-Compute the position factor of a value in between (or not) two values.
+Calculate the normalized position of a value between two bounds.
 
-![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/665cde81-9581-4ddf-9840-e9cf7fcf0fea)
+![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/665cde81-9581-4dff-9840-e9cf7fcf0fea)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 double Normalize(double a, double b, double position);
 ```
 
-### Sample
+#### Sample Y from X
 
-Compute for a line the Y vertical coords for the given X horizontal position.
+Calculate the Y coordinate for a given X on a line defined by two points.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/99610a7e-6fd5-47e6-b83e-36f520f754c3)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 double Sample(GeometryPoint2D a, GeometryPoint2D b, double x);
 ```
 
-### GetGamma
+#### Gamma Function
 
-Sample à curved function between 0 and 1, returning a value between 0 ans 1.
+Apply gamma correction to values in the 0-1 range.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/d5018d49-8c4f-494e-bcd9-3e5e04f84505)
 
-The prototype of the method :
-
+**Method Signature:**
+```csharp
+double GetGamma(double x, double curvature = 1);
 ```
-double GetGamma(double x, double curvatur = 1);
-```
 
-### Sample
+#### Sample Point from Slope
 
-Compute the point on a line for the given X horizontal position.
+Calculate a point on a line defined by slope and Y-intercept.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/e3e3ed11-773a-49a2-9099-83ef9f6a7ac8)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 GeometryPoint2D Sample(double slope, double yIntercept, double x);
 ```
 
-## LinearRegressions
+### Linear Regression
 
-Linear regression is **a data analysis technique that predicts the value of unknown data by using another related and known data value**. It mathematically models the unknown or dependent variable and the known or independent variable as a linear equation. It seeks the optimal line that minimizes the sum of squared differences between predicted and actual values.
+Linear regression predicts unknown values using known, related data by modeling relationships mathematically. It's used in economics, finance, and data analysis for trend forecasting.
 
-Applied in various domains like economics and finance, this method analyzes and forecasts data trends. It can extend to multiple linear regression involving several independent variables and logistic regression, suitable for binary classification problems.
+**Use Cases:**
+- Generate a linear representation (slope and Y-intercept) of a point set
+- Calculate correlation coefficient to measure data alignment
+- Predict the next probable value in a sequence
 
-Practically, there is three use cases :
+#### Compute Correlation Coefficient
 
-- Get a linear representation of a points set : a slope and an y offset, witch define a line.
-- Get a correlation or, level of alignment of the points (to get a randomness coefficient).
-- Compute the next most probable value for a point set, using the first point slope and offset.
-
-### ComputeCorrelationCoefficient
-
-Compute the correlation coefficient (or 'r') of a point serie. If points are perfectly aligned, result correlation is 1. If they are more randomly dispersed, correlation decrease to near 0.
+Calculate the correlation coefficient (r) of a point series. Perfect alignment = 1, random dispersion ≈ 0.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/b5499068-9637-436f-a9e3-c0e8fc865c79)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 double ComputeCorrelationCoefficient(GeometryPoint2D[] pts);
 ```
 
-### ComputeLinearRegression
+#### Compute Linear Regression
 
-Compute the regression line parameters (slope and Y offset) and correlation coeficient of a point serie.
+Calculate regression line parameters (slope, Y-intercept) and correlation coefficient.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/593e6aea-0c5e-4571-b14c-54c2d7dd5628)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 void ComputeLinearRegression(
     GeometryPoint2D[] pts,
     out double rSquared,
     out double yIntercept,
-    out double slope);
+    out double slope
+);
 ```
 
-## BSpline
+### B-Spline Interpolation
 
-### Interpolate1D
+#### Interpolate 1D
 
-Return a the point array that form the poly-line that represent the spline curve.
+Generate a smooth poly-line curve through control points using B-Spline interpolation.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/f2c714e2-6989-4fc8-8a80-91faa4c0f638)
 
-The prototype of the method :
-
-```
+**Method Signatures:**
+```csharp
 GeometryPoint2D[] Interpolate1D(GeometryPoint2D[] pts, int count);
 (double[] xs, double[] ys) Interpolate1D(double[] xs, double[] ys, int count);
 ```
 
-## Surfaces
+### Surface Calculations
 
-### ComputeTriangleArea
+#### Compute Triangle Area
 
-Compute the surface of a triangle.
+Calculate the area of a triangle defined by three points.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/d8d22e7a-a216-4689-9e93-72aa591cd901)
 
-The prototype of the method :
-
-```
+**Method Signature:**
+```csharp
 double ComputeTriangleArea(GeometryPoint2D a, GeometryPoint2D b, GeometryPoint2D c);
 ```
 
-### IsPointInTriangle
+#### Check Point in Triangle
 
-Check if a point is in a triangle.
+Determine if a point lies inside a triangle.
 
 ![image](https://github.com/Gabriel-RABHI/Geometry2DTinyHelpers/assets/8116286/7ffd8da7-e94e-42ec-a355-94bc0a151207)
 
-The prototype of the method :
-
+**Method Signature:**
+```csharp
+bool IsPointInTriangle(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, GeometryPoint2D c);
 ```
-bool IsPointInTriangle(GeometryPoint2D p, GeometryPoint2D a, GeometryPoint2D b, GeometryPoint2D c)
+
+## 🧪 Testing
+
+The library includes comprehensive unit tests in the `Geometry2DTinyHelpers.Tests` project.
+
+```bash
+dotnet test
 ```
 
+## 🤝 Contributing
 
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes:
 
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+
+## 👤 Author
+
+**Gabriel RABHI**
+- GitHub: [@Gabriel-RABHI](https://github.com/Gabriel-RABHI)
+
+## ⭐ Support
+
+If you find this library helpful, please consider giving it a star on GitHub!
+
+## 📊 Project Stats
+
+![GitHub stars](https://img.shields.io/github/stars/Gabriel-RABHI/Geometry2DTinyHelpers?style=social)
+![GitHub forks](https://img.shields.io/github/forks/Gabriel-RABHI/Geometry2DTinyHelpers?style=social)
+
+---
+
+**Made with ❤️ for developers who need simple, reliable 2D geometry calculations**
